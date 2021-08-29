@@ -84,7 +84,8 @@ public class RetainBestCache<K, T extends Rankable> {
     }
 
     private void evictElement() {
-      Entry<Long, Set<K>> entry = rankingOfObject.topEntry();
+        Entry<Long, Set<K>> entry = rankingOfObject.firstEntry
+      //Entry<Long, Set<K>> entry = rankingOfObject.topEntry();
       K key = entry.getValue().getIterator().next();
       entry.getValue().remove(key);
       cache.remove(key)
