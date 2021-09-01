@@ -51,9 +51,9 @@ public class RetainBestCache<K, T extends Rankable> {
     public RetainBestCache(DataSource<K,T> ds, int entriesToRetain) {
         // Implementation here
         cache = new HashMap<>();
-        rankingOfObject = new TreeMap<>();
-        dataSource = ds;
-        maxSizeOfCache = entriesToRetain;
+        rankingOfObject = new TreeMap<>(); 
+        dataSource = ds;  //data is not cached, get from datasource,
+        maxSizeOfCache = entriesToRetain;  // the size of cache
     }
 
     /* Gets some data. If possible, retrieves it from cache to be fast. If the data is not cached,
