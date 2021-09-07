@@ -7,125 +7,59 @@ Input : Dict - {"go","bat","me","eat","goal",
         arr[] = {'e','o','b', 'a','m','g', 'l'} 
 Output : go, me, goal. 
   
-  public class SearchDict_charArray {
-       
-    // Alphabet size
-    static final int SIZE = 26;
-       
-    // trie Node
-    static class TrieNode
-    {
-        TrieNode[] Child = new TrieNode[SIZE];
-       
-        // isLeaf is true if the node represents
-        // end of a word
-        boolean leaf;
-          
-        // Constructor
+  //You can use either a boolean array or an integer arr for the hash 
+  //(if you can use each character once and the given char arr can have duplicate.)
+    
+ public class PossibleValidWords {
+
+    class TrieNode {
+        TrieNode[] children;
+        boolean isLeaf;
+        String word;
+
         public TrieNode() {
-            leaf = false;
-            for (int i =0 ; i< SIZE ; i++)
-                    Child[i] = null;
+            this.children = new TrieNode[26];
+            this.isLeaf = false;
+            this.word = null;
         }
     }
-       
-    // If not present, inserts key into trie
-    // If the key is prefix of trie node, just
-    // marks leaf node
-    static void insert(TrieNode root, String Key)
-    {
-        int n = Key.length();
-        TrieNode pChild = root;
-       
-        for (int i=0; i<n; i++)
-        {
-            int index = Key.charAt(i) - 'a';
-       
-            if (pChild.Child[index] == null)
-                pChild.Child[index] = new TrieNode();
-       
-            pChild = pChild.Child[index];
-        }
-       
-        // make last node as leaf node
-        pChild.leaf = true;
-    }
-       
-    // A recursive function to print all possible valid
-    // words present in array
-    static void searchWord(TrieNode root, boolean Hash[],
-                                            String str)
-    {
-        // if we found word in trie / dictionary
-        if (root.leaf == true)
-            System.out.println(str);
-       
-        // traverse all child's of current root
-        for (int K =0; K < SIZE; K++)
-        {
-            if (Hash[K] == true && root.Child[K] != null )
-            {
-                // add current character
-                char c = (char) (K + 'a');
-       
-                // Recursively search reaming character 
-                // of word in trie
-                searchWord(root.Child[K], Hash, str + c);
-            }
-        }
-    }
-       
-    // Prints all words present in dictionary.
-    static void PrintAllWords(char Arr[], TrieNode root, 
-                                              int n)
-    {
-        // create a 'has' array that will store all 
-        // present character in Arr[]
-        boolean[] Hash = new boolean[SIZE];
-       
-        for (int i = 0 ; i < n; i++)
-            Hash[Arr[i] - 'a'] = true;
-       
-        // tempary node
-        TrieNode pChild = root ;
-       
-        // string to hold output words
-        String str = "";
-       
-        // Traverse all matrix elements. There are only 
-        // 26 character possible in char array
-        for (int i = 0 ; i < SIZE ; i++)
-        {
-            // we start searching for word in dictionary
-            // if we found a character which is child
-            // of Trie root
-            if (Hash[i] == true && pChild.Child[i] != null )
-            {
-                str = str+(char)(i + 'a');
-                searchWord(pChild.Child[i], Hash, str);
-                str = "";
-            }
-        }
-    }
-       
-    //Driver program to test above function
-    public static void main(String args[])
-    {
-        // Let the given dictionary be following
-        String Dict[] = {"go", "bat", "me", "eat",
-                           "goal", "boy", "run"} ;
-       
-        // Root Node of Trie
+
+    public List<String> solution(char[] letters, String[] dict) {
         TrieNode root = new TrieNode();
-       
-        // insert all words of dictionary into trie
-        int n = Dict.length;
-        for (int i=0; i<n; i++)
-            insert(root, Dict[i]);
-       
-        char arr[] = {'e', 'o', 'b', 'a', 'm', 'g', 'l'} ;
-        int N = arr.length;
-       
-        PrintAllWords(arr, root, N);
+        for (String d : dict)
+            insertWord(root, d);
+        List<String> res = new ArrayList<>();
+        boolean[] hash = new boolean[26];
+        for (char l : letters) {
+            hash[l - 'a'] = true;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (hash[i] && root.children[i] != null)
+                helper(res, hash, root.children[i]);
+        }
+        return res;
+    }
+
+    private void insertWord(TrieNode root, String w) {
+        TrieNode cur = root;
+        for (char c : w.toCharArray()) {
+            int idx = c - 'a';
+            if (cur.children[idx] == null)
+                cur.children[idx] = new TrieNode();
+            cur = cur.children[idx];
+        }
+        cur.isLeaf = true;
+        cur.word = w;
+    }
+
+    private void helper(List<String> res, boolean[] hash, TrieNode node) {
+        if (node.isLeaf) {
+            res.add(node.word);
+        }
+        for (int i = 0; i < 26; i++) {
+            if (hash[i] && node.children[i] != null) {
+                helper(res, hash, node.children[i]);
+            }
+        }
     }
 }
