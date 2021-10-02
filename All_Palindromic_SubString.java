@@ -9,14 +9,14 @@ public class AllPalindromicSubstring {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<String> strs = allPalindromicSubSequence("abaca");
+		List<String> strs = allPalindromicSubString("abaca");
 		
 		for (String st : strs){
 			System.out.println(st);
 		}
 	}
 	
-	public static List<String> allPalindromicSubSequence(String str){
+	public static List<String> allPalindromicSubString(String str){
         List<String> ans = new ArrayList<>();
         int len = str.length();
         int[][] dp = new int[len][len];
