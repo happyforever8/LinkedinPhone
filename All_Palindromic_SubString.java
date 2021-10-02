@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AllPalindromicSubsequences {
+public class AllPalindromicSubstring {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
