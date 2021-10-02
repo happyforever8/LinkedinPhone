@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// time is 2^N the nth power of 2 
 public class PalindromeSubSequence {
 
 	
