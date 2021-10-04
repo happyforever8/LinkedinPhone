@@ -6,7 +6,8 @@ Input : Dict - {"go","bat","me","eat","goal",
                                 "boy", "run"} 
         arr[] = {'e','o','b', 'a','m','g', 'l'} 
 Output : go, me, goal. 
-  
+  //复杂度为 O(m)，m 为最长的字符串的长度
+  // spaec is 0(26)
   //You can use either a boolean array or an integer arr for the hash 
   //(if you can use each character once and the given char arr can have duplicate.)
     
